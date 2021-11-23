@@ -1,0 +1,133 @@
+@font-face {
+    font-family: Peyda;
+    src: url("/font/eot/PeydaWeb-Regular.eot"); /* IE9 Compat Modes */
+    src: url("/font/eot/PeydaWeb-Regular.eot?#iefix") format('embedded-opentype'), /* IE6-IE8 */
+    url("/font/woff2/PeydaWeb-Regular.woff2") format('woff2'), /* Super Modern Browsers */
+    url("/font/woff/PeydaWeb-Regular.woff") format('woff'); /* Pretty Modern Browsers */
+}
+
+@font-face {
+    font-family: "Peyda Black";
+    src: url("/font/eot/PeydaWeb-Black.eot"); /* IE9 Compat Modes */
+    src: url("/font/eot/PeydaWeb-Black.eot?#iefix") format('embedded-opentype'), /* IE6-IE8 */
+    url("/font/woff2/PeydaWeb-Black.woff2") format('woff2'), /* Super Modern Browsers */
+    url("/font/woff/PeydaWeb-Black.woff") format('woff'); /* Pretty Modern Browsers */
+}
+
+@font-face {
+    font-family: "IRANSansX Regular";
+    src: url("/font/woff2/IRANSansX-Regular.woff2") format('woff2'), /* Super Modern Browsers */
+    url("/font/woff/IRANSansX-Regular.woff") format('woff'); /* Pretty Modern Browsers */
+}
+
+body{
+    background-color: #222831;
+}
+
+input:checked{
+    background-color: #00ADB5 !important;
+}
+
+.chi-peyda-regular, .chi-peyda-regular ul li{
+    font-family: Peyda , serif;
+}
+
+.chi-isx-regular, .chi-isx-regular ul li{
+    font-family: "IRANSansX Regular", serif;
+    font-size: 0.85em;
+}
+
+.chi-justify{
+    text-align: justify;
+}
+
+.chi-peyda-black{
+    font-family: "Peyda Black", serif;
+    font-size: 2em;
+}
+.chi-peyda-footer{
+    font-family: "Peyda Black", serif;
+    font-size: 1.5em;
+}
+
+.color1-bg{background-color: #222831;}
+.color2-bg{background-color: #393E46;}
+.color3-bg{background-color: #00ADB5;}
+.color4-bg{background-color: #EEEEEE;}
+.color1-f, .color1-f a{color: #222831 !important;}
+.color2-f, .color2-f a{color: #393E46 !important;}
+.color3-f, .color3-f a{color: #00ADB5 !important;}
+.color4-f, .color4-f a{color: #EEEEEE !important;}
+
+.chi-btn-outline-c3{
+    border-color: #00ADB5;
+    color: #00ADB5 !important
+}
+.chi-btn-outline-c3:hover{
+    background-color: #00ADB5;
+    color: #EEEEEE !important
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* remove the gap so it doesn't close */
+}
+
+.chi-ltr{
+    direction: ltr;
+}
+
+.chi-card-title{
+    font-size: 1em;
+}
+
+a:hover{
+    color: #00ADB5 !important;
+}
+
+.chi-border-light{
+    border-color: rgba(238, 238, 238, 0.5);
+}
+
+.chi-login-btn:hover {
+    color: #EEEEEE !important;
+}
+
+.chi-list-item{
+    color: #EEEEEE;
+    background-color: #393E46;
+    border: 1px solid rgba(238, 238, 238, 0.5);
+    font-family: Peyda, serif;
+}
+
+.chi-list-item a{
+    color: #EEEEEE;
+    text-decoration: none;
+}
+
+.custom-file-input {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    margin: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.custom-file-label{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: .375rem .75rem;
+    overflow: hidden;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
