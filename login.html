@@ -52,77 +52,33 @@
 </nav>
 <!--NavBar-->
 
-<!--MainCard-->
-<div class="container">
-    <div class="row py-3">
-        <div class="col-md-3 col-12 mb-3">
-            <div class="card color2-bg">
-                <div class="card-body">
-                    <div class="card-title chi-peyda-regular color4-f">
-                        منوی کاربری
-                    </div>
-                    <div class="card-text">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item chi-list-item"><a href="#">افزودن فیلم</a></li>
-                            <li class="list-group-item chi-list-item"><a href="#">لیست تماشا</a></li>
-                            <li class="list-group-item chi-list-item"><a href="#">دیده شده ها</a></li>
-                            <li class="list-group-item chi-list-item"><a href="#">اطلاعات حساب</a></li>
-                            <li class="list-group-item chi-list-item"><a href="#">کلمه عبور</a></li>
-                            <li class="list-group-item chi-list-item"><a href="#">خروج</a></li>
-                        </ul>
-                    </div>
+<!--Login/Signup-->
+<div class="container py-4">
+    <div class="row mb-5" style="height: 25em">
+        <div class="col"></div>
+        <div class="col-md-5 color2-bg p-5">
+            <h4 class="text-center chi-peyda-regular color4-f mb-4">خوش آمدید</h4>
+            <form class="chi-peyda-regular d-grid gap-2">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="ChiUsername" placeholder="Username">
+                    <label for="ChiUsername">نام کاربری</label>
                 </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="ChiPassword" placeholder="Password">
+                    <label for="ChiPassword">کلمه عبور</label>
+                </div>
+                <button class="btn btn-lg btn-dark chi-btn-dark" type="submit">ورود</button>
+
+            </form>
+            <div class="row chi-peyda-regular my-3">
+                <div class="col d-grid gap-2"><a class="btn btn-dark" href="#">عضویت</a></div>
+                <div class="col d-grid gap-2"><a class="btn btn-dark" href="#">فراموشی</a></div>
             </div>
         </div>
-        <div class="col-md-9 col-12 mb-3">
-            <div class="card color2-bg">
-                <div class="card-body">
-                    <div class="card-title chi-peyda-regular color4-f">
-                        پروفایل شما
-                    </div>
-                    <div class="card-text">
-                        <div class="row row-cols-1 row-cols-md-2 pt-2 g-4 mx-auto">
-                            <div class="col-md-3 text-center pt-md-3">
-                                <img src="/image/profile.jpg" class="rounded-circle" alt="..."
-                                     style="height: 200px; width: 200px">
-                            </div>
-                            <div class="col-md-7 mx-auto chi-peyda-regular">
-                                <form>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon3">نام کاربری</span>
-                                        <input type="text" class="form-control" id="basic-url"
-                                               placeholder="mjavadtatari"
-                                               aria-describedby="basic-addon3">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon3">نام و نام خانوادگی</span>
-                                        <input type="text" class="form-control" id="basic-url"
-                                               placeholder="محمد جواد تاتاری"
-                                               aria-describedby="basic-addon3">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon3">آدرس ایمیل</span>
-                                        <input type="text" class="form-control" id="basic-url"
-                                               placeholder="mjavadtatari98@gmail.com"
-                                               aria-describedby="basic-addon3">
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <label class="input-group-text" for="inputGroupFile02">تصویر پروفایل</label>
-                                        <input type="file" class="form-control chi-ltr" id="inputGroupFile02">
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary mb-3">ثبت تغییرات</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="col"></div>
     </div>
 </div>
-<!--MainCard-->
+<!--Login/Signup-->
 
 <!--Footer-->
 <footer>
@@ -166,5 +122,6 @@
 <!--JavaScript Files-->
 <script src="js/all.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+<!--JavaScript Files-->
 </body>
 </html>
