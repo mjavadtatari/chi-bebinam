@@ -1,3 +1,25 @@
+<?php
+
+require __DIR__ . '/imdbphp-7.2.0/bootstrap.php';
+
+$movie = new \Imdb\Title($_GET["id"]);
+$title = $movie->title();
+$photo = $movie->photo(false);
+$imdbid = $movie->imdbid();
+$geners = $movie->genres();
+$director = $movie->director();
+$actor_stars = $movie->actor_stars();
+$rating = $movie->rating();
+$votes = $movie->votes();
+$country = $movie->country();
+$metacriticRating = $movie->metacriticRating();
+$languages = $movie->languages();
+$year = $movie->year();
+$storyline = $movie->storyline();
+$top250 = $movie->top250();
+$awards = $movie->awards();
+$plotOutline = $movie->plotoutline();
+?>
 <!DOCTYPE html>
 <html lang="fa-IR" dir="rtl">
 <head>
@@ -60,13 +82,14 @@
             <div class="card color2-bg">
                 <div class="card-body">
                     <div class="card-title chi-peyda-regular color4-f">
-                        فیلم The Shawshank Redemption
+                        فیلم
+                        <?php echo $title ?>
                     </div>
                     <div class="card-text">
                         <div class="row row-cols-1 row-cols-md-2 pt-2 g-4 mx-auto">
                             <div class="col-md-4 text-center">
-                                <img src="/image/tt0111161.jpg" class="rounded " alt="..."
-                                     style="max-width: 256px">
+                                <img src="<?php echo $photo ?>" class="rounded " alt="..."
+                                     style="width: 256px">
                             </div>
                             <div class="col-md-8 chi-peyda-regular">
                                 <div class="row row-cols-1 row-cols-md-2">
@@ -74,25 +97,39 @@
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-secondary border-secondary">IMDb</span>
                                             <span class="form-control bg-dark border-dark text-light">
-                                                <a class="text-decoration-none text-light" href="#">9.3/10</a>
+                                                <a class="text-decoration-none text-light"
+                                                   href="https://www.imdb.com/title/tt<?php echo $imdbid ?>"><?php echo $rating ?>/10</a>
                                             </span>
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-secondary border-secondary">تعداد رای</span>
                                             <span class="form-control bg-dark border-dark text-light">
-                                                <a class="text-decoration-none text-light" href="#">2.5 میلیون</a>
+                                                <a class="text-decoration-none text-light"
+                                                   href="#"><?php echo number_format($votes) ?></a>
                                             </span>
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-secondary border-secondary">ژانر</span>
                                             <span class="form-control bg-dark border-dark text-light">
-                                                <a class="text-decoration-none text-light" href="#">درام</a>
+                                            <ul class="chi-movie-stars">
+                                                <?php
+                                                foreach ($geners as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j . '</a></li>';
+                                                }
+                                                ?>
+                                            </ul>
                                             </span>
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-secondary border-secondary">کارگردان</span>
                                             <span class="form-control bg-dark border-dark text-light">
-                                                <a class="text-decoration-none text-light" href="#">Frank Darabont</a>
+                                                <ul class="chi-movie-stars">
+                                                <?php
+                                                foreach ($director as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="https://www.imdb.com/name/nm' . $j["imdb"] . '">' . $j["name"] . '</a></li>';
+                                                }
+                                                ?>
+                                            </ul>
                                             </span>
                                         </div>
                                     </div>
@@ -100,25 +137,39 @@
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-secondary border-secondary">Metascore</span>
                                             <span class="form-control bg-dark border-dark text-light">
-                                                <a class="text-decoration-none text-light" href="#">80/100</a>
+                                                <a class="text-decoration-none text-light"
+                                                   href="https://www.imdb.com/title/tt<?php echo $imdbid ?>/criticreviews"><?php echo $metacriticRating ?>/100</a>
                                             </span>
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-secondary border-secondary">زبان</span>
                                             <span class="form-control bg-dark border-dark text-light">
-                                                <a class="text-decoration-none text-light" href="#">English</a>
+                                            <ul class="chi-movie-stars">
+                                                <?php
+                                                foreach ($languages as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j . '</a></li>';
+                                                }
+                                                ?>
+                                            </ul>
                                             </span>
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-secondary border-secondary">محصول</span>
                                             <span class="form-control bg-dark border-dark text-light">
-                                                <a class="text-decoration-none text-light" href="#">United States</a>
+                                            <ul class="chi-movie-stars">
+                                                <?php
+                                                foreach ($country as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j . '</a></li>';
+                                                }
+                                                ?>
+                                            </ul>
                                             </span>
                                         </div>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text bg-secondary border-secondary">سال تولید</span>
                                             <span class="form-control bg-dark border-dark text-light">
-                                                <a class="text-decoration-none text-light" href="#">1994</a>
+                                                <a class="text-decoration-none text-light"
+                                                   href="#"><?php echo $year ?></a>
                                             </span>
                                         </div>
                                     </div>
@@ -128,11 +179,11 @@
                                         <span class="input-group-text bg-secondary border-secondary">ستارگان</span>
                                         <span class="form-control bg-dark border-dark text-light chi-justify">
                                             <ul class="chi-movie-stars">
-                                                <li><a class="text-decoration-none text-light" href="#">Tim Robbins</a></li>
-                                                <li><a class="text-decoration-none text-light"
-                                                       href="#">Morgan Freeman</a></li>
-                                                <li><a class="text-decoration-none text-light"
-                                                       href="#">Bob Gunton</a></li>
+                                                <?php
+                                                foreach ($actor_stars as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="https://www.imdb.com/name/nm' . $j["imdb"] . '">' . $j["name"] . '</a></li>';
+                                                }
+                                                ?>
                                             </ul>
                                         </span>
                                     </div>
@@ -145,10 +196,7 @@
                                             داستان
                                         </span>
                                         <span class="form-control bg-dark border-dark text-light chi-justify">
-                                            اندی، بانکدار محترم و پولدار ایالت نیوانگلند، به اتهام قتل همسرش و فاسق او
-                                            به حبس ابد در زندان ایالتی شاوشنک محکوم می شود و اندکی بعد با Red، زندانی
-                                            سیاه پوست، دوست می شود. پس از هجده سال، اندی ردی از قاتل اصلی پیدا می کند و
-                                            تصمیم می گیرد برای آزادی تلاش کند…
+                                            <?php echo substr($storyline, 0, 300) . "..." ?>
                                         </span>
                                     </div>
                                 </div>
@@ -185,11 +233,26 @@
                             </div>
                             <div class="card-text">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item chi-list-item">رتبه 1 از 250 فیلم برتر IMDb</li>
-                                    <li class="list-group-item chi-list-item">برنده 0 اسکار</li>
-                                    <li class="list-group-item chi-list-item">نامزد 7 اسکار</li>
-                                    <li class="list-group-item chi-list-item">برنده 21 جایزه دیگر</li>
-                                    <li class="list-group-item chi-list-item">نامزد 43 جایزه دیگر</li>
+                                    <?php
+                                    if ($top250) {
+                                        echo '<li class="list-group-item chi-list-item">رتبه ' . $top250 . ' از 250 فیلم برتر IMDb</li>';
+                                    }
+
+                                    $won_oscars = 0;
+                                    $lost_oscars = 0;
+
+                                    if (isset($awards["Academy Awards, USA"])){
+                                        foreach ($awards["Academy Awards, USA"]["entries"] as $j) {
+                                            if ($j["won"]) {
+                                                $won_oscars++;
+                                            } else {
+                                                $lost_oscars++;
+                                            }
+                                        }
+                                        echo '<li class="list-group-item chi-list-item">برنده ' . $won_oscars . ' اسکار</li>';
+                                        echo '<li class="list-group-item chi-list-item">نامزد ' . $lost_oscars . ' اسکار</li>';
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
