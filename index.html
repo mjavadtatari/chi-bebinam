@@ -14,10 +14,11 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col"></div>
-        <div class="col-6 mt-5">
+        <div class="col-9 mt-5">
             <table class="table color4-f chi-peyda-regular">
                 <thead>
                 <tr>
+                    <th scope="col">نوع</th>
                     <th scope="col">صفحه</th>
                     <th scope="col">لینک</th>
                     <th scope="col">توضیحات</th>
@@ -25,26 +26,50 @@
                 </thead>
                 <tbody>
                 <tr>
+                    <td>استاتیک</td>
                     <td>خانه</td>
                     <td><a href="home.html">home.html</a></td>
                     <td>صفحه اصلی سایت</td>
                 </tr>
                 <tr>
+                    <td>استاتیک</td>
                     <td>پروفایل</td>
                     <td><a href="profile.html">profile.html</a></td>
                     <td>پروفایل کاربران را بعد از ورود نشان میدهد</td>
                 </tr>
                 <tr>
+                    <td class="text-danger">داینامیک</td>
                     <td>فیلم</td>
-                    <td><a href="movie.php">movie.html</a></td>
-                    <td>صفحه مربوط به فیلم (همراه با اطلاعات آن) را نمایش میدهد</td>
+                    <td><a href="movie.php?id=tt0468569">movie.php</a></td>
+                    <td>
+                        صفحه مربوط به فیلم (همراه با اطلاعات آن) را نمایش میدهد
+                        <span class="text-warning d-block">
+                            با قرار دادن ID فیلم در انتهای آدرس به صورت
+                            <span class="text-danger">id=tt0468569?</span>
+                            اطلاعات مربوط به آن فیلم را دریافت کنید
+                        </span>
+                    </td>
                 </tr>
                 <tr>
+                    <td>استاتیک</td>
+                    <td>لیست فیلم</td>
+                    <td><a href="movie_list.html">movie_list.html</a></td>
+                    <td>لیست فیلم های یک دسته بندی خاص</td>
+                </tr>
+                <tr>
+                    <td>استاتیک</td>
+                    <td>اشخاص</td>
+                    <td><a href="person.html">person.html</a></td>
+                    <td>صفحه مربوط به اشخاص</td>
+                </tr>
+                <tr>
+                    <td>استاتیک</td>
                     <td>ورود</td>
                     <td><a href="login.html">login.html</a></td>
                     <td>صفحه شامل فرم ورود</td>
                 </tr>
                 <tr>
+                    <td>استاتیک</td>
                     <td>ثبت نام</td>
                     <td><a href="signup.html">signup.html</a></td>
                     <td>صفحه شامل فرم ثبت نام</td>
