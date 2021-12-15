@@ -1,3 +1,8 @@
 # chi-bebinam
 
-using Bootstrap 5.1 & FontAwesome 5.15
+University Web Development Class Project
+
+Description:
+Offers random Movies based on users' filters.
+
+Bootstrap 5.1
