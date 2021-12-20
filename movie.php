@@ -2,7 +2,10 @@
 
 require __DIR__ . '/imdbphp-7.2.0/bootstrap.php';
 
-$movie = new \Imdb\Title($_GET["id"]);
+$config = new \Imdb\Config();
+$config->language = 'en-US';
+
+$movie = new \Imdb\Title($_GET["id"], $config);
 $title = $movie->title();
 $photo = $movie->photo(false);
 $imdbid = $movie->imdbid();
@@ -241,7 +244,7 @@ $plotOutline = $movie->plotoutline();
                                     $won_oscars = 0;
                                     $lost_oscars = 0;
 
-                                    if (isset($awards["Academy Awards, USA"])){
+                                    if (isset($awards["Academy Awards, USA"])) {
                                         foreach ($awards["Academy Awards, USA"]["entries"] as $j) {
                                             if ($j["won"]) {
                                                 $won_oscars++;
