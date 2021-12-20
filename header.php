@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="fa-IR" dir="rtl">
 <head>
@@ -13,7 +15,7 @@
 <!--NavBar-->
 <nav class="navbar navbar-expand-lg navbar-light color1-bg py-4">
     <div class="container">
-        <a class="navbar-brand chi-peyda-black text-light" href="#">
+        <a class="navbar-brand chi-peyda-black text-light" href="index.php">
             چی ببینم؟
         </a>
         <a class="btn btn-sm btn-success chi-peyda-regular chi-login-btn" href="#">ورود کاربران</a>
