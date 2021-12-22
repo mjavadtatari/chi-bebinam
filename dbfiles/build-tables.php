@@ -122,7 +122,7 @@ CREATE TABLE `chibebinam`.`languages` (
 $countries="
 CREATE TABLE `chibebinam`.`countries` (
   `countryid` INT NOT NULL AUTO_INCREMENT,
-  `countrname` VARCHAR(45) NOT NULL,
+  `countryname` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`countryid`));
 ";
 
