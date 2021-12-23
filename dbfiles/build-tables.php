@@ -4,20 +4,33 @@ $pdo = include "dbconnect.php";
 $persons = "
 CREATE TABLE `chibebinam`.`persons` (
   `personid` INT NOT NULL,
-  `firstname` VARCHAR(90) NOT NULL,
-  `lastname` VARCHAR(90) NOT NULL,
+  `fullname` VARCHAR(150) NOT NULL,
+  `picture` VARCHAR(255) NULL,
   `birthdate` DATE NOT NULL,
   `biography` TEXT NOT NULL,
-  `score` SMALLINT NULL DEFAULT NULL,
-  `type` ENUM('actor', 'actress', 'director', 'other') NOT NULL,
+  `type` ENUM('actor', 'director') NOT NULL,
   PRIMARY KEY (`personid`));
 ";
 
 $categories = "
 CREATE TABLE `chibebinam`.`categories` (
-  `catid` INT NOT NULL AUTO_INCREMENT,
-  `catname` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`catid`));
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+";
+
+$languages="
+CREATE TABLE `chibebinam`.`languages` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+";
+
+$countries="
+CREATE TABLE `chibebinam`.`countries` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
 ";
 
 $movies = "
@@ -39,8 +52,7 @@ CREATE TABLE `chibebinam`.`movies` (
 $users = "
 CREATE TABLE `chibebinam`.`users` (
   `userid` INT NOT NULL AUTO_INCREMENT,
-  `firstname` VARCHAR(90) NULL,
-  `lastname` VARCHAR(90) NULL,
+  `fullname` VARCHAR(120) NULL,
   `username` VARCHAR(45) NOT NULL,
   `email` VARCHAR(120) NOT NULL,
   `picture` VARCHAR(255) NULL,
@@ -112,20 +124,6 @@ CREATE TABLE `chibebinam`.`persontomovie` (
     ON UPDATE CASCADE);
 ";
 
-$languages="
-CREATE TABLE `chibebinam`.`languages` (
-  `languageid` INT NOT NULL AUTO_INCREMENT,
-  `langname` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`languageid`));
-";
-
-$countries="
-CREATE TABLE `chibebinam`.`countries` (
-  `countryid` INT NOT NULL AUTO_INCREMENT,
-  `countryname` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`countryid`));
-";
-
 $country_to_movie="
 CREATE TABLE `chibebinam`.`countrytomovie` (
   `ctmid` INT NOT NULL AUTO_INCREMENT,
@@ -141,7 +139,7 @@ CREATE TABLE `chibebinam`.`countrytomovie` (
     ON UPDATE CASCADE,
   CONSTRAINT `countryctm`
     FOREIGN KEY (`countryctm`)
-    REFERENCES `chibebinam`.`countries` (`countryid`)
+    REFERENCES `chibebinam`.`countries` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 ";
@@ -161,19 +159,41 @@ CREATE TABLE `chibebinam`.`languagetomovie` (
     ON UPDATE CASCADE,
   CONSTRAINT `languageltm`
     FOREIGN KEY (`languageltm`)
-    REFERENCES `chibebinam`.`languages` (`languageid`)
+    REFERENCES `chibebinam`.`languages` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 ";
 
+$category_to_movie="
+CREATE TABLE `chibebinam`.`categorytomovie` (
+  `ktmid` INT(11) NOT NULL AUTO_INCREMENT,
+  `moviektm` INT(11) NOT NULL,
+  `categoryktm` INT(11) NOT NULL,
+  PRIMARY KEY (`ktmid`),
+  INDEX `moviektm_idx` (`moviektm` ASC) ,
+  INDEX `categoryktm_idx` (`categoryktm` ASC) ,
+  CONSTRAINT `moviektm`
+    FOREIGN KEY (`moviektm`)
+    REFERENCES `chibebinam`.`movies` (`movieid`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `categoryktm`
+    FOREIGN KEY (`categoryktm`)
+    REFERENCES `chibebinam`.`categories` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
+";
+
+
 $pdo->exec($persons);
 $pdo->exec($categories);
+$pdo->exec($languages);
+$pdo->exec($countries);
 $pdo->exec($movies);
 $pdo->exec($users);
 $pdo->exec($watched_list);
 $pdo->exec($watch_list);
 $pdo->exec($person_to_movie);
-$pdo->exec($languages);
-$pdo->exec($countries);
 $pdo->exec($country_to_movie);
 $pdo->exec($language_to_movie);
+$pdo->exec($category_to_movie);
