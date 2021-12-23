@@ -1,139 +1,76 @@
-<!DOCTYPE html>
-<html lang="fa-IR" dir="rtl">
-<head>
-    <title>چی ببینم؟</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="css/fontawesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.rtl.min.css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-</head>
-<body>
+<?php require __DIR__ . '\header.php'; ?>
+<?php
+function generateCsrfToken()
+{
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
 
-<!--NavBar-->
-<nav class="navbar navbar-expand-lg navbar-light color1-bg py-4">
-    <div class="container">
-        <a class="navbar-brand chi-peyda-black text-light" href="#">
-            چی ببینم؟
-        </a>
-        <a class="btn btn-sm btn-success chi-peyda-regular chi-login-btn" href="#">ورود کاربران</a>
-        <button class="navbar-toggler color3-bg" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse chi-peyda-regular" id="navbarToggler">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#">صفحه اصلی</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">مجموعه ها</a>
-                    <ul class="dropdown-menu dropdown-menu-dark color2-bg bg-opacity-25">
-                        <li><a class="dropdown-item text-light" href="#">برندگان اسکار</a></li>
-                        <li><a class="dropdown-item text-light" href="#">برندگان گلدن گلوب</a></li>
-                        <li><a class="dropdown-item text-light" href="#">250 فیلم برتر</a></li>
-                        <li><a class="dropdown-item text-light" href="#">جدول باکس آفیس</a></li>
-                        <li><a class="dropdown-item text-light" href="#">انیمیشن ها</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-light" href="#">بازیگران</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#">کارگردانان</a>
-                </li>
-            </ul>
-            <form class="d-flex">
-                <input class="form-control me-1" type="search" placeholder="جستجو" aria-label="Search">
-                <button class="btn btn-outline-light color2-bg" type="submit">بگرد</button>
-            </form>
+?>
+
+    <!--Login/Signup-->
+    <div class="container py-4">
+        <div class="row mb-5">
+            <div class="col"></div>
+            <div class="col-md-5 color2-bg p-5">
+                <h4 class="text-center chi-peyda-regular color4-f mb-4">فرم ثبت نام</h4>
+                <?php
+                $status = $_GET['status'] ?? '';
+                if ($status) { ?>
+                    <div class="alert alert-danger chi-peyda-regular" role="alert">
+                        <?php if ($status == 1) { ?>
+                            خطایی رخ داد، لطفا دوباره تلاش کنید!
+                        <?php } elseif ($status == 2) { ?>
+                            کاربری با این مشخصات وجود دارد!
+                        <?php } elseif ($status == 3) { ?>
+                            رمز های عبور وارد شده یکسان نیستند!
+                        <?php } elseif ($status == 4) { ?>
+                            رمز عبور کوچکتر از 8 کاراکتر می باشد!
+                        <?php } elseif ($status == 5) { ?>
+                            رمز عبور باید حداقل شامل یک عدد باشد!
+                        <?php } elseif ($status == 6) { ?>
+                            رمز عبور باید حداقل شامل یک حرف باشد!
+                        <?php } elseif ($status == 7) { ?>
+                            نام کاربری کوچکتر از 8 کاراکتر یا تماما عدد است!
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+                <form method="post" action="profile/signupcheck.php" class="chi-peyda-regular d-grid gap-2">
+                    <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ChiFullName" name="fullname" placeholder="fullName">
+                        <label for="ChiFullName">نام شما</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="ChiUsername" name="username" placeholder="Username">
+                        <label for="ChiUsername">نام کاربری</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="ChiEmail" name="email" placeholder="Email">
+                        <label for="ChiEmail">ایمیل</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="ChiPassword1" name="password1"
+                               placeholder="Password">
+                        <label for="ChiPassword1">کلمه عبور</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="ChiPassword2" name="password2"
+                               placeholder="RePassword">
+                        <label for="ChiPassword2">تکرار کلمه عبور</label>
+                    </div>
+                    <button class="btn btn-lg btn-dark chi-btn-dark" type="submit">عضویت</button>
+
+                </form>
+                <div class="row chi-peyda-regular my-3">
+                    <div class="col d-grid gap-2"><a class="btn btn-dark" href="#">ورود</a></div>
+                </div>
+            </div>
+            <div class="col"></div>
         </div>
     </div>
-</nav>
-<!--NavBar-->
+    <!--Login/Signup-->
 
-<!--Login/Signup-->
-<div class="container py-4">
-    <div class="row mb-5">
-        <div class="col"></div>
-        <div class="col-md-5 color2-bg p-5">
-            <h4 class="text-center chi-peyda-regular color4-f mb-4">فرم ثبت نام</h4>
-            <form class="chi-peyda-regular d-grid gap-2">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="ChiFullName" placeholder="fullName">
-                    <label for="ChiFullName">نام شما</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="ChiUsername" placeholder="Username">
-                    <label for="ChiUsername">نام کاربری</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="ChiEmail" placeholder="Email">
-                    <label for="ChiEmail">ایمیل</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="ChiPassword1" placeholder="Password">
-                    <label for="ChiPassword1">کلمه عبور</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="ChiPassword2" placeholder="RePassword">
-                    <label for="ChiPassword2">تکرار کلمه عبور</label>
-                </div>
-                <button class="btn btn-lg btn-dark chi-btn-dark" type="submit">عضویت</button>
-
-            </form>
-            <div class="row chi-peyda-regular my-3">
-                <div class="col d-grid gap-2"><a class="btn btn-dark" href="#">ورود</a></div>
-            </div>
-        </div>
-        <div class="col"></div>
-    </div>
-</div>
-<!--Login/Signup-->
-
-<!--Footer-->
-<footer>
-    <div class="container">
-        <div class="row my-3">
-            <div class="col-lg-8 col-sm-4 px-md-0 px-4 pe-lg-5 mb-md-0 mb-4">
-                <h3 class="chi-peyda-footer color4-f">
-                    چی ببینم؟
-                </h3>
-                <p class="chi-isx-regular chi-justify color4-f opacity-75">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها
-                    و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.
-                </p>
-            </div>
-            <div class="col-lg-2 col-sm-4 color4-f chi-peyda-regular mb-md-0 mb-4">
-                <ul>
-                    <li><a class="text-decoration-none" href="#">مجموعه ها</a></li>
-                    <li><a class="text-decoration-none" href="#">بازیگران</a></li>
-                    <li><a class="text-decoration-none" href="#">کارگردانان</a></li>
-                    <li><a class="text-decoration-none" href="#">شبکه ها</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-2 col-sm-4 color4-f chi-peyda-regular mb-md-0 mb-4">
-                <ul>
-                    <li><a class="text-decoration-none" href="#">مجموعه ها</a></li>
-                    <li><a class="text-decoration-none" href="#">بازیگران</a></li>
-                    <li><a class="text-decoration-none" href="#">کارگردانان</a></li>
-                    <li><a class="text-decoration-none" href="#">شبکه ها</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="row my-3">
-            <p class="chi-isx-regular text-center color2-f chi-ltr">
-                @mjavadtatari
-            </p>
-        </div>
-    </div>
-</footer>
-<!--Footer-->
-
-<!--JavaScript Files-->
-<script src="js/all.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-<!--JavaScript Files-->
-</body>
-</html>
+<?php require __DIR__ . '\footer.php'; ?>
