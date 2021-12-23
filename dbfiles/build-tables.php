@@ -38,6 +38,7 @@ CREATE TABLE `chibebinam`.`movies` (
   `movieid` INT NOT NULL,
   `name` VARCHAR(255) NOT NULL,
   `image` VARCHAR(255) NOT NULL,
+  `thumb` VARCHAR(255) NOT NULL,
   `imdbpoint` TINYINT NOT NULL,
   `imdbvote` MEDIUMINT NULL,
   `imdbtop` TINYINT UNSIGNED NOT NULL,
