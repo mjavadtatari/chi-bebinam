@@ -16,8 +16,8 @@ $full_name = $_POST['fullname'];
 
 function isUserExists($pdo, $username, $email)
 {
-    $email_sql = "SELECT * FROM `users` WHERE `username` = '$username'; ";
-    $username_sql = "SELECT * FROM `users` WHERE `email` = '$email'; ";
+    $username_sql = "SELECT * FROM `users` WHERE `username` = '$username'; ";
+    $email_sql = "SELECT * FROM `users` WHERE `email` = '$email'; ";
     $email_result = $pdo->prepare($email_sql);
     $email_result->execute();
     $username_result = $pdo->prepare($username_sql);
@@ -59,7 +59,7 @@ function createUser($pdo, $username, $email, $password1, $password2, $full_name)
 {
     if (!isUserExists($pdo, $username, $email)) {
         if (checkStrength($username, $password1, $password2)) {
-            $password = md5($password1);
+            $password = password_hash($password1, PASSWORD_DEFAULT);
             $create_sql = "INSERT INTO `users` (`fullname`, `username`, `email`, `password`, `type`)
                            VALUES (?,?,?,?,?);";
             $stmt = $pdo->prepare($create_sql);
