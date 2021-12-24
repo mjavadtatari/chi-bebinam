@@ -70,7 +70,7 @@ function setOrCreatePerson($pdo, $movie_id, $the_list, $type)
         $sql = "SELECT * FROM `persons` WHERE `personid` = '$imdb'";
         $result = $pdo->query($sql);
         if (empty($result->fetchAll(PDO::FETCH_ASSOC))) {
-            $create_sql = "INSERT INTO `chibebinam`.`persons` (`personid`,`fullname`,`picture`,`biography`, `birthdate`, `type`)
+            $create_sql = "INSERT INTO `persons` (`personid`,`fullname`,`picture`,`biography`, `birthdate`, `type`)
                            VALUES ($imdb, '$name', '$photo', '$bio', '$born', '$type')";
             $pdo->exec($create_sql);
         }
@@ -117,7 +117,7 @@ function addMovie($imdb_id)
         }
     }
 
-    $sql = "INSERT INTO `chibebinam`.`movies` (
+    $sql = "INSERT INTO `movies` (
             movieid, name, image, thumb, imdbpoint,
             imdbvote, imdbtop, metascore,
             yearproduced, oscarawards, oscarnominations, storyline)

@@ -3,12 +3,12 @@ require __DIR__ . '\header.php';
 
 $pdo = connectToDb();
 
-$latest = "SELECT * FROM `chibebinam`.`movies` ORDER BY RAND() LIMIT 6";
+$latest = "SELECT * FROM `movies` ORDER BY RAND() LIMIT 6";
 $stmt = $pdo->prepare($latest);
 $stmt->execute();
 $latest_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$carousel = "SELECT * FROM `chibebinam`.`movies`
+$carousel = "SELECT * FROM `movies`
 WHERE `movieid` = 1375666 OR  `movieid` = 120689 OR `movieid` = 6751668; ";
 $stmt = $pdo->prepare($carousel);
 $stmt->execute();

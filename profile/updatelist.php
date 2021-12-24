@@ -24,12 +24,12 @@ $user_id = $user_id[0]['userid'];
 
 if (isset($_GET['watch'])) {
     $movie_id = $_GET['watch'];
-    $sql = "SELECT * FROM `chibebinam`.`watchlist` WHERE `watchuser` = '$user_id' AND `watchmovie` = '$movie_id'; ";
+    $sql = "SELECT * FROM `watchlist` WHERE `watchuser` = '$user_id' AND `watchmovie` = '$movie_id'; ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     if (!empty($stmt->fetchAll(PDO::FETCH_ASSOC))) {
         if (isset($_GET['delete'])) {
-            $sql = "DELETE FROM `chibebinam`.`watchlist` WHERE `watchuser` = '$user_id' AND `watchmovie` = '$movie_id'; ";
+            $sql = "DELETE FROM `watchlist` WHERE `watchuser` = '$user_id' AND `watchmovie` = '$movie_id'; ";
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
             if (isset($_GET['back'])) {
@@ -42,19 +42,19 @@ if (isset($_GET['watch'])) {
             header("Location: ../movie.php?id=$movie_id&status=0");
         }
     } else {
-        $sql = "INSERT INTO `chibebinam`.`watchlist` (`watchmovie`, `watchuser`) VALUES (?,?); ";
+        $sql = "INSERT INTO `watchlist` (`watchmovie`, `watchuser`) VALUES (?,?); ";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$movie_id, $user_id]);
         header("Location: ../movie.php?id=$movie_id&status=2");
     }
 } elseif (isset($_GET['watched'])) {
     $movie_id = $_GET['watched'];
-    $sql = "SELECT * FROM `chibebinam`.`watchedlist` WHERE `watcheduser` = '$user_id' AND `watchedmovie` = '$movie_id'; ";
+    $sql = "SELECT * FROM `watchedlist` WHERE `watcheduser` = '$user_id' AND `watchedmovie` = '$movie_id'; ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     if (!empty($stmt->fetchAll(PDO::FETCH_ASSOC))) {
         if (isset($_GET['delete'])) {
-            $sql = "DELETE FROM `chibebinam`.`watchedlist` WHERE `watcheduser` = '$user_id' AND `watchedmovie` = '$movie_id'; ";
+            $sql = "DELETE FROM `watchedlist` WHERE `watcheduser` = '$user_id' AND `watchedmovie` = '$movie_id'; ";
             $stmt = $pdo->prepare($sql);
             $stmt->execute();
             if (isset($_GET['back'])) {
@@ -67,7 +67,7 @@ if (isset($_GET['watch'])) {
             header("Location: ../movie.php?id=$movie_id&status=0");
         }
     } else {
-        $sql = "INSERT INTO `chibebinam`.`watchedlist` (`watchedmovie`, `watcheduser`) VALUES (?,?); ";
+        $sql = "INSERT INTO `watchedlist` (`watchedmovie`, `watcheduser`) VALUES (?,?); ";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$movie_id, $user_id]);
         header("Location: ../movie.php?id=$movie_id&status=2");

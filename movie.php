@@ -205,7 +205,7 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             $movie_id = $movie[0]['movieid'];
 
 
-                                            $sql = "SELECT * FROM `chibebinam`.`watchlist` WHERE `watchuser` = '$user_id' AND `watchmovie` = '$movie_id'; ";
+                                            $sql = "SELECT * FROM `watchlist` WHERE `watchuser` = '$user_id' AND `watchmovie` = '$movie_id'; ";
                                             $stmt = $pdo->prepare($sql);
                                             $stmt->execute();
 
@@ -222,7 +222,7 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             $movie_id = $movie[0]['movieid'];
 
 
-                                            $sql = "SELECT * FROM `chibebinam`.`watchedlist` WHERE `watcheduser` = '$user_id' AND `watchedmovie` = '$movie_id'; ";
+                                            $sql = "SELECT * FROM `watchedlist` WHERE `watcheduser` = '$user_id' AND `watchedmovie` = '$movie_id'; ";
                                             $stmt = $pdo->prepare($sql);
                                             $stmt->execute();
 

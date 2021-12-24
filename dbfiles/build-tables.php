@@ -2,7 +2,7 @@
 $pdo = include "dbconnect.php";
 
 $persons = "
-CREATE TABLE `chibebinam`.`persons` (
+CREATE TABLE `persons` (
   `personid` INT NOT NULL,
   `fullname` VARCHAR(150) NOT NULL,
   `picture` VARCHAR(255) NULL,
@@ -13,28 +13,28 @@ CREATE TABLE `chibebinam`.`persons` (
 ";
 
 $categories = "
-CREATE TABLE `chibebinam`.`categories` (
+CREATE TABLE `categories` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 ";
 
 $languages = "
-CREATE TABLE `chibebinam`.`languages` (
+CREATE TABLE `languages` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 ";
 
 $countries = "
-CREATE TABLE `chibebinam`.`countries` (
+CREATE TABLE `countries` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 ";
 
 $movies = "
-CREATE TABLE `chibebinam`.`movies` (
+CREATE TABLE `movies` (
   `movieid` INT NOT NULL,
   `name` VARCHAR(255) NOT NULL,
   `image` VARCHAR(255) NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE `chibebinam`.`movies` (
 ";
 
 $users = "
-CREATE TABLE `chibebinam`.`users` (
+CREATE TABLE `users` (
   `userid` INT NOT NULL AUTO_INCREMENT,
   `fullname` VARCHAR(120) NULL,
   `username` VARCHAR(45) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE `chibebinam`.`users` (
 ";
 
 $watched_list = "
-CREATE TABLE `chibebinam`.`watchedlist` (
+CREATE TABLE `watchedlist` (
   `watchedid` INT NOT NULL AUTO_INCREMENT,
   `watchedmovie` INT NOT NULL,
   `watcheduser` INT NOT NULL,
@@ -77,18 +77,18 @@ CREATE TABLE `chibebinam`.`watchedlist` (
   INDEX `watcheduser_idx` (`watcheduser` ASC) ,
   CONSTRAINT `watchedmovie`
     FOREIGN KEY (`watchedmovie`)
-    REFERENCES `chibebinam`.`movies` (`movieid`)
+    REFERENCES `movies` (`movieid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `watcheduser`
     FOREIGN KEY (`watcheduser`)
-    REFERENCES `chibebinam`.`users` (`userid`)
+    REFERENCES `users` (`userid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 ";
 
 $watch_list = "
-CREATE TABLE `chibebinam`.`watchlist` (
+CREATE TABLE `watchlist` (
   `watchid` INT NOT NULL AUTO_INCREMENT,
   `watchmovie` INT NOT NULL,
   `watchuser` INT NOT NULL,
@@ -97,18 +97,18 @@ CREATE TABLE `chibebinam`.`watchlist` (
   INDEX `watchuser_idx` (`watchuser` ASC),
   CONSTRAINT `watchmovie`
     FOREIGN KEY (`watchmovie`)
-    REFERENCES `chibebinam`.`movies` (`movieid`)
+    REFERENCES `movies` (`movieid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `watchuser`
     FOREIGN KEY (`watchuser`)
-    REFERENCES `chibebinam`.`users` (`userid`)
+    REFERENCES `users` (`userid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 ";
 
 $person_to_movie = "
-CREATE TABLE `chibebinam`.`persontomovie` (
+CREATE TABLE `persontomovie` (
   `persontomovieid` INT NOT NULL AUTO_INCREMENT,
   `personto` INT NOT NULL,
   `movieto` INT NOT NULL,
@@ -117,18 +117,18 @@ CREATE TABLE `chibebinam`.`persontomovie` (
   INDEX `movieto_idx` (`movieto` ASC) ,
   CONSTRAINT `personto`
     FOREIGN KEY (`personto`)
-    REFERENCES `chibebinam`.`persons` (`personid`)
+    REFERENCES `persons` (`personid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `movieto`
     FOREIGN KEY (`movieto`)
-    REFERENCES `chibebinam`.`movies` (`movieid`)
+    REFERENCES `movies` (`movieid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 ";
 
 $country_to_movie = "
-CREATE TABLE `chibebinam`.`countrytomovie` (
+CREATE TABLE `countrytomovie` (
   `ctmid` INT NOT NULL AUTO_INCREMENT,
   `moviectm` INT NOT NULL,
   `countryctm` INT NOT NULL,
@@ -137,18 +137,18 @@ CREATE TABLE `chibebinam`.`countrytomovie` (
   INDEX `countryctm_idx` (`countryctm` ASC) ,
   CONSTRAINT `moviectm`
     FOREIGN KEY (`moviectm`)
-    REFERENCES `chibebinam`.`movies` (`movieid`)
+    REFERENCES `movies` (`movieid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `countryctm`
     FOREIGN KEY (`countryctm`)
-    REFERENCES `chibebinam`.`countries` (`id`)
+    REFERENCES `countries` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 ";
 
 $language_to_movie = "
-CREATE TABLE `chibebinam`.`languagetomovie` (
+CREATE TABLE `languagetomovie` (
   `ltmid` INT(11) NOT NULL AUTO_INCREMENT,
   `movieltm` INT(11) NOT NULL,
   `languageltm` INT(11) NOT NULL,
@@ -157,18 +157,18 @@ CREATE TABLE `chibebinam`.`languagetomovie` (
   INDEX `languageltm_idx` (`languageltm` ASC) ,
   CONSTRAINT `movieltm`
     FOREIGN KEY (`movieltm`)
-    REFERENCES `chibebinam`.`movies` (`movieid`)
+    REFERENCES `movies` (`movieid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `languageltm`
     FOREIGN KEY (`languageltm`)
-    REFERENCES `chibebinam`.`languages` (`id`)
+    REFERENCES `languages` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 ";
 
 $category_to_movie = "
-CREATE TABLE `chibebinam`.`categorytomovie` (
+CREATE TABLE `categorytomovie` (
   `ktmid` INT(11) NOT NULL AUTO_INCREMENT,
   `moviektm` INT(11) NOT NULL,
   `categoryktm` INT(11) NOT NULL,
@@ -177,12 +177,12 @@ CREATE TABLE `chibebinam`.`categorytomovie` (
   INDEX `categoryktm_idx` (`categoryktm` ASC) ,
   CONSTRAINT `moviektm`
     FOREIGN KEY (`moviektm`)
-    REFERENCES `chibebinam`.`movies` (`movieid`)
+    REFERENCES `movies` (`movieid`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `categoryktm`
     FOREIGN KEY (`categoryktm`)
-    REFERENCES `chibebinam`.`categories` (`id`)
+    REFERENCES `categories` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 ";
