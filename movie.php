@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '\header.php';
+require __DIR__ . '/header.php';
 
 $pdo = connectToDb();
 
@@ -276,4 +276,4 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <!--MainCard-->
 
-<?php require __DIR__ . '\footer.php'; ?>
+<?php require __DIR__ . '/footer.php'; ?>

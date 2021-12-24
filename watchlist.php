@@ -70,4 +70,4 @@ $the_watch_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <!--MainCard-->
 
-<?php require __DIR__ . '\footer.php'; ?>
+<?php require __DIR__ . '/footer.php'; ?>

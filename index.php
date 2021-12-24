@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '\header.php';
+require __DIR__ . '/header.php';
 
 $pdo = connectToDb();
 
@@ -250,4 +250,4 @@ $year_produced = $year_produced_stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <!--Random-->
 
-<?php require __DIR__ . '\footer.php'; ?>
+<?php require __DIR__ . '/footer.php'; ?>

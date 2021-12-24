@@ -1,4 +1,4 @@
-<?php require __DIR__ . '\header.php'; ?>
+<?php require __DIR__ . '/header.php'; ?>
 <?php
 function generateCsrfToken()
 {
@@ -73,4 +73,4 @@ function generateCsrfToken()
     </div>
     <!--Login/Signup-->
 
-<?php require __DIR__ . '\footer.php'; ?>
+<?php require __DIR__ . '/footer.php'; ?>

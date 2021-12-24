@@ -1,6 +1,6 @@
 <?php
-require __DIR__ . '\header.php';
-require __DIR__ . '\pagination.php';
+require __DIR__ . '/header.php';
+require __DIR__ . '/pagination.php';
 
 $sql_addon = '';
 $subject = $_GET['sub'] ?? "null";
@@ -103,4 +103,4 @@ $the_pages = getPaginationButtons($all_movies_list->rowCount(), $per_page, $curr
     </div>
     <!--MoviesList-->
 
-<?php require __DIR__ . '\footer.php'; ?>
+<?php require __DIR__ . '/footer.php'; ?>

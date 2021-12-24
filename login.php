@@ -1,4 +1,4 @@
-<?php require __DIR__ . '\header.php'; ?>
+<?php require __DIR__ . '/header.php'; ?>
 <?php
 function generateCsrfToken()
 {
@@ -65,4 +65,4 @@ if (isset($_COOKIE["token"]) and isset($_SESSION['token'])) {
     </div>
     <!--Login/Signup-->
 
-<?php require __DIR__ . '\footer.php'; ?>
+<?php require __DIR__ . '/footer.php'; ?>
