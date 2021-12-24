@@ -50,6 +50,7 @@ function setOrCreatePerson($pdo, $movie_id, $the_list, $type)
 
         $person = new \Imdb\Person($imdb);
         $name = $person->name();
+        $name = str_replace("'", "", $name);
         $photo = $person->photo(false);
         $bio = $person->bio();
         if ($bio) {
@@ -59,7 +60,11 @@ function setOrCreatePerson($pdo, $movie_id, $the_list, $type)
             $bio = '';
         }
         $born = $person->born();
-        $born = $born["year"] . "-" . $born["mon"] . "-" . $born["day"];
+        if (!isset($born["year"]) or !isset($born["mon"]) or !isset($born["day"])) {
+            $born = "2000-01-01";
+        } else {
+            $born = $born["year"] . "-" . $born["mon"] . "-" . $born["day"];
+        }
 
 
         $sql = "SELECT * FROM `persons` WHERE `personid` = '$imdb'";
