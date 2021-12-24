@@ -19,14 +19,14 @@ CREATE TABLE `chibebinam`.`categories` (
   PRIMARY KEY (`id`));
 ";
 
-$languages="
+$languages = "
 CREATE TABLE `chibebinam`.`languages` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 ";
 
-$countries="
+$countries = "
 CREATE TABLE `chibebinam`.`countries` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
@@ -62,6 +62,8 @@ CREATE TABLE `chibebinam`.`users` (
   `type` ENUM('admin', 'vip', 'normal') NOT NULL,
   `birthdate` DATE NULL,
   `joindate` DATETIME NOT NULL DEFAULT NOW(),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) ,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) ,
   PRIMARY KEY (`userid`));
 ";
 
@@ -125,7 +127,7 @@ CREATE TABLE `chibebinam`.`persontomovie` (
     ON UPDATE CASCADE);
 ";
 
-$country_to_movie="
+$country_to_movie = "
 CREATE TABLE `chibebinam`.`countrytomovie` (
   `ctmid` INT NOT NULL AUTO_INCREMENT,
   `moviectm` INT NOT NULL,
@@ -145,7 +147,7 @@ CREATE TABLE `chibebinam`.`countrytomovie` (
     ON UPDATE CASCADE);
 ";
 
-$language_to_movie="
+$language_to_movie = "
 CREATE TABLE `chibebinam`.`languagetomovie` (
   `ltmid` INT(11) NOT NULL AUTO_INCREMENT,
   `movieltm` INT(11) NOT NULL,
@@ -165,7 +167,7 @@ CREATE TABLE `chibebinam`.`languagetomovie` (
     ON UPDATE CASCADE);
 ";
 
-$category_to_movie="
+$category_to_movie = "
 CREATE TABLE `chibebinam`.`categorytomovie` (
   `ktmid` INT(11) NOT NULL AUTO_INCREMENT,
   `moviektm` INT(11) NOT NULL,
