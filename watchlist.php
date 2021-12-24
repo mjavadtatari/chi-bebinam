@@ -24,7 +24,7 @@ $the_watch_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="col-md-10 mx-auto chi-peyda-regular">
                                     <?php
                                     $status = $_GET['status'] ?? '';
-                                    if ($status == 0) { ?>
+                                    if ($status == 2) { ?>
                                         <div class="alert alert-success chi-peyda-regular" role="alert">
                                             فیلم با موفقیت اضافه شد!
                                             <a href="movie.php?id=<?php echo $_GET['link']; ?>" class="alert-link">مشاهده

@@ -24,7 +24,7 @@ function updateUser($pdo, $username, $new_username, $new_full_name, $new_email, 
                          `email` = '$new_email', `picture` = '$new_picture' WHERE `username` = '$username'; ";
         $new_user_result = $pdo->prepare($new_user_sql);
         $new_user_result->execute();
-        header("Location: ../profile.php?status=0");
+        header("Location: ../profile.php?status=1");
         return true;
     } else {
         return false;

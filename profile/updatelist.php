@@ -39,7 +39,7 @@ if (isset($_GET['watch'])) {
                 header("Location: ../movie.php?id=$movie_id&status=1");
             }
         } else {
-            header("Location: ../movie.php?id=$movie_id&status=0");
+            header("Location: ../movie.php?id=$movie_id&status=2");
         }
     } else {
         $sql = "INSERT INTO `watchlist` (`watchmovie`, `watchuser`) VALUES (?,?); ";
@@ -64,7 +64,7 @@ if (isset($_GET['watch'])) {
                 header("Location: ../movie.php?id=$movie_id&status=1");
             }
         } else {
-            header("Location: ../movie.php?id=$movie_id&status=0");
+            header("Location: ../movie.php?id=$movie_id&status=2");
         }
     } else {
         $sql = "INSERT INTO `watchedlist` (`watchedmovie`, `watcheduser`) VALUES (?,?); ";

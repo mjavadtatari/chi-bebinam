@@ -25,7 +25,7 @@ if (isset($_COOKIE["token"]) and isset($_SESSION['token'])) {
                 <h4 class="text-center chi-peyda-regular color4-f mb-4">خوش آمدید</h4>
                 <?php
                 $status = $_GET['status'] ?? '';
-                if ($status == 0) { ?>
+                if ($status == 4) { ?>
                     <div class="alert alert-success chi-peyda-regular" role="alert">
                         ثبت نام با موفقیت انجام شد، میتوانید وارد شوید!
                     </div>

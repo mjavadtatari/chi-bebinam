@@ -1,6 +1,6 @@
 <?php
-$conf = include "..\config.php";
-//require __DIR__ . '\dblogger.php';
+$conf = include "../config.php";
+//require __DIR__ . '/dblogger.php';
 
 $host = $conf["host"];
 $username = $conf["DbUsername"];

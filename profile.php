@@ -20,7 +20,7 @@
                                 <div class="col-md-7 mx-auto chi-peyda-regular">
                                     <?php
                                     $status = $_GET['status'] ?? '';
-                                    if ($status == 0) { ?>
+                                    if ($status == 1) { ?>
                                         <div class="alert alert-success chi-peyda-regular" role="alert">
                                             پروفایل شما با موفقیت بروز شد!
                                         </div>

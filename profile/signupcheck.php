@@ -65,7 +65,7 @@ function createUser($pdo, $username, $email, $password1, $password2, $full_name)
             $stmt = $pdo->prepare($create_sql);
             $stmt->execute([$full_name, $username, $email, $password, "normal"]);
             if (isUserExists($pdo, $username, $email)){
-                header("Location: ../login.php?status=0");
+                header("Location: ../login.php?status=4");
             }
         }
     }

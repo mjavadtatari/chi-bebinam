@@ -142,7 +142,7 @@ function addMovie($imdb_id)
 if (isset($_GET['movie'])) {
     $link = intval($_GET['movie']);
     if (addMovie($_GET['movie'])) {
-        header("Location: ../addmovie.php?status=0&link=$link");
+        header("Location: ../addmovie.php?status=2&link=$link");
     } else {
         header("Location: ../addmovie.php?status=1&link=$link");
     }
