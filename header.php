@@ -64,21 +64,22 @@ $key = 'acslgjwhrtt#$%&@@FDHN0.648d6a523';
                     <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink"
                        role="button" data-bs-toggle="dropdown" aria-expanded="false">مجموعه ها</a>
                     <ul class="dropdown-menu dropdown-menu-dark color2-bg bg-opacity-25">
-                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=oscar">برندگان اسکار</a></li>
-                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=topimdb">250 فیلم برتر</a></li>
                         <li><a class="dropdown-item text-light" href="movie_list.php?sub=nolan">فیلم های نولان</a></li>
-                        <li><a class="dropdown-item text-light" href="#">انیمیشن ها</a></li>
+                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=dicaprio">فیلم های دیکاپریو</a></li>
+                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=iran">فیلم های ایرانی</a></li>
+                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=2021">فیلم های 2021</a></li>
+                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=animation">انیمیشن ها</a></li>
                     </ul>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link text-light" href="#">بازیگران</a>
+                    <a class="nav-link text-light" href="movie_list.php?sub=oscar">برندگان اسکار</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">کارگردانان</a>
+                    <a class="nav-link text-light" href="movie_list.php?sub=topimdb">250 فیلم برتر</a>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-1" type="search" placeholder="جستجو" aria-label="Search">
+            <form method="get" action="movie_list.php" class="d-flex">
+                <input class="form-control me-1" type="search" placeholder="نام فیلم" name="key" aria-label="Search">
                 <button class="btn btn-outline-light color2-bg" type="submit">بگرد</button>
             </form>
         </div>

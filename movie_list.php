@@ -3,18 +3,30 @@ require __DIR__ . '\header.php';
 require __DIR__ . '\pagination.php';
 
 $sql_addon = '';
-$subject = $_GET['sub'] ?? null;
+$subject = $_GET['sub'] ?? "null";
 
-if ($subject == 'oscar') {
-    $sql_addon = "WHERE `oscarawards` > 0";
-} elseif ($subject == 'topimdb') {
-    $sql_addon = "WHERE `imdbtop` > 0";
-} elseif ($subject == 'nolan') {
-    $sql_addon = "JOIN `persontomovie` ON `persontomovie`.`movieto` = `movies`.`movieid`
-WHERE `persontomovie`.`personto` = 634240";
+$sql_addon = [
+    "null" => "",
+    "oscar" => "WHERE `oscarawards` > 0 ORDER BY `movies`.`yearproduced` DESC",
+    "topimdb" => "WHERE `imdbtop` > 0 ORDER BY `movies`.`imdbtop`",
+    "2021" => "WHERE `yearproduced` = 2021",
+    "iran" => "JOIN `countrytomovie` ON `countrytomovie`.`moviectm` = `movies`.`movieid`
+WHERE `countrytomovie`.`countryctm` = (SELECT `countries`.`id` FROM `countries` WHERE `name` LIKE '%iran%')",
+    "dicaprio" => "JOIN `persontomovie` ON `persontomovie`.`movieto` = `movies`.`movieid`
+WHERE `persontomovie`.`personto` = (SELECT `persons`.`personid` FROM `persons` WHERE `fullname` LIKE '%dicaprio%')",
+    "animation" => "JOIN `categorytomovie` ON `categorytomovie`.`moviektm` = `movies`.`movieid`
+WHERE `categorytomovie`.`categoryktm` = (SELECT `categories`.`id` FROM `categories` WHERE `name` = 'Animation')",
+    "nolan" => "JOIN `persontomovie` ON `persontomovie`.`movieto` = `movies`.`movieid`
+WHERE `persontomovie`.`personto` = 634240"
+];
+
+if (isset($_GET['key'])) {
+    $search = $_GET['key'];
+    $sql_addon["s"] = "WHERE `name` LIKE '%$search%'";
+    $subject = "s";
 }
 
-$sql = "SELECT * FROM `movies`" . $sql_addon;
+$sql = "SELECT * FROM `movies`" . $sql_addon[$subject];
 $all_movies_list = $pdo->prepare($sql);
 $all_movies_list->execute();
 
@@ -22,7 +34,7 @@ $per_page = 10;
 $current_page = $_GET['page'] ?? 1;
 $offset = (($current_page - 1) * $per_page);
 
-$sql = "SELECT * FROM `movies` " . $sql_addon . " LIMIT $per_page OFFSET $offset";
+$sql = "SELECT * FROM `movies` " . $sql_addon[$subject] . " LIMIT $per_page OFFSET $offset";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $movies_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -70,7 +82,11 @@ $the_pages = getPaginationButtons($all_movies_list->rowCount(), $per_page, $curr
                                         <?php } else { ?>
                                             <li class="page-item <?php if ($current_page == $j['number']) echo 'active'; ?>">
                                                 <a class="page-link"
-                                                   href="?page=<?php echo $j['number']; ?><?php if (isset($subject)) echo '&sub=' . $subject; ?>">
+                                                   href="?page=<?php echo $j['number']; ?><?php if (isset($subject) and $subject != "s") {
+                                                       echo '&sub=' . $subject;
+                                                   } elseif (isset($_GET['key'])) {
+                                                       echo '&key=' . $_GET['key'];
+                                                   } ?>">
                                                     <?php echo $j['text']; ?></a></li>
                                         <?php }
                                     }
