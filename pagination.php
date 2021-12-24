@@ -21,7 +21,7 @@ function getPaginationButtons($total_items, $per_page, $current_page)
     if ($total_pages - $current_page > 3) {
         $pages[] = ["text" => "..."];
     }
-    if($total_pages!=1){
+    if($total_pages>1){
         $pages[] = ["text" => strval($total_pages), "number" => $total_pages];
     }
     if ($current_page < $total_pages) {
