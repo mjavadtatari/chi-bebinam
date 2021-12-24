@@ -146,7 +146,6 @@ if (isset($_GET['movie'])) {
     } else {
         header("Location: ../addmovie.php?status=1&link=$link");
     }
-
 }
 
 //
