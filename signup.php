@@ -65,7 +65,7 @@ function generateCsrfToken()
 
                 </form>
                 <div class="row chi-peyda-regular my-3">
-                    <div class="col d-grid gap-2"><a class="btn btn-dark" href="#">ورود</a></div>
+                    <div class="col d-grid gap-2"><a class="btn btn-dark" href="login.php">ورود</a></div>
                 </div>
             </div>
             <div class="col"></div>
