@@ -1,4 +1,18 @@
-<?php session_start(); ?>
+<?php session_start();
+function connectToDb()
+{
+    $conf = include "config.php";
+    $host = $conf["host"];
+    $username = $conf["DbUsername"];
+    $password = $conf["DbPassword"];
+    $dbname = $conf["DbName"];
+
+    return new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+}
+
+$pdo = connectToDb();
+$key = 'acslgjwhrtt#$%&@@FDHN0.648d6a523';
+?>
 
 <!DOCTYPE html>
 <html lang="fa-IR" dir="rtl">
@@ -18,7 +32,25 @@
         <a class="navbar-brand chi-peyda-black text-light" href="index.php">
             چی ببینم؟
         </a>
-        <a class="btn btn-sm btn-success chi-peyda-regular chi-login-btn" href="#">ورود کاربران</a>
+        <?php
+        if (isset($_COOKIE["token"]) and isset($_SESSION['user'])) {
+            if (hash_equals($_COOKIE["token"], hash_hmac('sha256', $_SESSION['user'], $key))) {
+                $user = $_SESSION['user'];
+                $sql = "SELECT `users`.`fullname`,`users`.`userid`  FROM `users` WHERE `username` = '$user'";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $is_logged_in = true;
+                $user_id = $result[0]['userid'];
+                ?>
+                <a class="btn btn-sm btn-success chi-peyda-regular chi-login-btn"
+                   href="profile.php"><?php echo $result[0]['fullname']; ?></a>
+            <?php }
+        } else {
+            $is_logged_in = false;
+            $user_id = ''; ?>
+            <a class="btn btn-sm btn-success chi-peyda-regular chi-login-btn" href="login.php">ورود کاربران</a>
+        <?php } ?>
         <button class="navbar-toggler color3-bg" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
                 aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,16 +58,15 @@
         <div class="collapse navbar-collapse chi-peyda-regular" id="navbarToggler">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#">صفحه اصلی</a>
+                    <a class="nav-link text-light" href="index.php">صفحه اصلی</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink"
                        role="button" data-bs-toggle="dropdown" aria-expanded="false">مجموعه ها</a>
                     <ul class="dropdown-menu dropdown-menu-dark color2-bg bg-opacity-25">
-                        <li><a class="dropdown-item text-light" href="#">برندگان اسکار</a></li>
-                        <li><a class="dropdown-item text-light" href="#">برندگان گلدن گلوب</a></li>
-                        <li><a class="dropdown-item text-light" href="#">250 فیلم برتر</a></li>
-                        <li><a class="dropdown-item text-light" href="#">جدول باکس آفیس</a></li>
+                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=oscar">برندگان اسکار</a></li>
+                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=topimdb">250 فیلم برتر</a></li>
+                        <li><a class="dropdown-item text-light" href="movie_list.php?sub=nolan">فیلم های نولان</a></li>
                         <li><a class="dropdown-item text-light" href="#">انیمیشن ها</a></li>
                     </ul>
                 </li>

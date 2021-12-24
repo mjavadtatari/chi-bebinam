@@ -1,206 +1,188 @@
 <?php
+require __DIR__ . '\header.php';
 
-require __DIR__ . '/imdbphp-7.2.0/bootstrap.php';
+$pdo = connectToDb();
 
-$config = new \Imdb\Config();
-$config->language = 'en-US';
+$the_movie = $_GET['id'];
+$sql = "SELECT * FROM `movies` WHERE `movieid` = '$the_movie'; ";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$movie = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$movie = new \Imdb\Title($_GET["id"], $config);
-$title = $movie->title();
-$photo = $movie->photo(false);
-$imdbid = $movie->imdbid();
-$geners = $movie->genres();
-$director = $movie->director();
-$actor_stars = $movie->actor_stars();
-$rating = $movie->rating();
-$votes = $movie->votes();
-$country = $movie->country();
-$metacriticRating = $movie->metacriticRating();
-$languages = $movie->languages();
-$year = $movie->year();
-$storyline = $movie->storyline();
-$top250 = $movie->top250();
-$awards = $movie->awards();
-$plotOutline = $movie->plotoutline();
+$sql = "
+SELECT `categories`.`id`, `categories`.`name` FROM `categorytomovie`
+JOIN `categories` ON `categorytomovie`.`categoryktm`= `categories`.`id`
+WHERE `moviektm` = '$the_movie'; 
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$genres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = "
+SELECT `countries`.`id`, `countries`.`name` FROM `countrytomovie`
+JOIN `countries` ON `countrytomovie`.`countryctm`= `countries`.`id`
+WHERE `moviectm` = '$the_movie'; 
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$countries = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = "
+SELECT `languages`.`id`, `languages`.`name` FROM `languagetomovie`
+JOIN `languages` ON `languagetomovie`.`languageltm`= `languages`.`id`
+WHERE `movieltm` = '$the_movie';  
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$languages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = "
+SELECT `persons`.`personid`, `persons`.`fullname` FROM `persontomovie`
+JOIN `persons` ON `persontomovie`.`personto`= `persons`.`personid`
+WHERE `movieto` = '$the_movie' AND `persons`.`type` = 'actor' ; 
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$actors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = "
+SELECT `persons`.`personid`, `persons`.`fullname` FROM `persontomovie`
+JOIN `persons` ON `persontomovie`.`personto`= `persons`.`personid`
+WHERE `movieto` = '$the_movie' AND `persons`.`type` = 'director' ; 
+";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<!DOCTYPE html>
-<html lang="fa-IR" dir="rtl">
-<head>
-    <title>چی ببینم؟</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="css/fontawesome.min.css">
-    <link rel="stylesheet" href="css/bootstrap.rtl.min.css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-</head>
-<body>
 
-<!--NavBar-->
-<nav class="navbar navbar-expand-lg navbar-light color1-bg py-4">
+    <!--MainCard-->
     <div class="container">
-        <a class="navbar-brand chi-peyda-black text-light" href="#">
-            چی ببینم؟
-        </a>
-        <a class="btn btn-sm btn-success chi-peyda-regular chi-login-btn" href="#">ورود کاربران</a>
-        <button class="navbar-toggler color3-bg" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse chi-peyda-regular" id="navbarToggler">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#">صفحه اصلی</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false">مجموعه ها</a>
-                    <ul class="dropdown-menu dropdown-menu-dark color2-bg bg-opacity-25">
-                        <li><a class="dropdown-item text-light" href="#">برندگان اسکار</a></li>
-                        <li><a class="dropdown-item text-light" href="#">برندگان گلدن گلوب</a></li>
-                        <li><a class="dropdown-item text-light" href="#">250 فیلم برتر</a></li>
-                        <li><a class="dropdown-item text-light" href="#">جدول باکس آفیس</a></li>
-                        <li><a class="dropdown-item text-light" href="#">انیمیشن ها</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link text-light" href="#">بازیگران</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#">کارگردانان</a>
-                </li>
-            </ul>
-            <form class="d-flex">
-                <input class="form-control me-1" type="search" placeholder="جستجو" aria-label="Search">
-                <button class="btn btn-outline-light color2-bg" type="submit">بگرد</button>
-            </form>
-        </div>
-    </div>
-</nav>
-<!--NavBar-->
-
-<!--MainCard-->
-<div class="container">
-    <div class="row py-3">
-        <div class="col-md-9 col-12 mb-3">
-            <div class="card color2-bg">
-                <div class="card-body">
-                    <div class="card-title chi-peyda-regular color4-f">
-                        فیلم
-                        <?php echo $title ?>
-                    </div>
-                    <div class="card-text">
-                        <div class="row row-cols-1 row-cols-md-2 pt-2 g-4 mx-auto">
-                            <div class="col-md-4 text-center">
-                                <img src="<?php echo $photo ?>" class="rounded " alt="..."
-                                     style="width: 256px">
-                            </div>
-                            <div class="col-md-8 chi-peyda-regular">
-                                <div class="row row-cols-1 row-cols-md-2">
-                                    <div class="col-md-6 chi-peyda-regular">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-secondary border-secondary">IMDb</span>
-                                            <span class="form-control bg-dark border-dark text-light">
+        <div class="row py-3">
+            <div class="col-md-9 col-12 mb-3">
+                <div class="card color2-bg">
+                    <div class="card-body">
+                        <div class="card-title chi-peyda-regular color4-f">
+                            فیلم
+                            <?php echo $movie[0]['name']; ?>
+                        </div>
+                        <div class="card-text">
+                            <div class="row row-cols-1 row-cols-md-2 pt-2 g-4 mx-auto">
+                                <div class="col-md-4 text-center">
+                                    <img src="<?php echo $movie[0]['image']; ?>" class="rounded "
+                                         alt="<?php echo $movie[0]['name']; ?>"
+                                         style="width: 256px">
+                                </div>
+                                <div class="col-md-8 chi-peyda-regular">
+                                    <div class="row row-cols-1 row-cols-md-2">
+                                        <div class="col-md-6 chi-peyda-regular">
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-secondary border-secondary">IMDb</span>
+                                                <span class="form-control bg-dark border-dark text-light">
                                                 <a class="text-decoration-none text-light"
-                                                   href="https://www.imdb.com/title/tt<?php echo $imdbid ?>"><?php echo $rating ?>/10</a>
+                                                   href="https://www.imdb.com/title/tt<?php echo str_pad($movie[0]['movieid'], 7, "0", STR_PAD_LEFT); ?>">
+                                                    <?php echo $movie[0]['imdbpoint']; ?>/10</a>
                                             </span>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-secondary border-secondary">تعداد رای</span>
-                                            <span class="form-control bg-dark border-dark text-light">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-secondary border-secondary">تعداد رای</span>
+                                                <span class="form-control bg-dark border-dark text-light">
                                                 <a class="text-decoration-none text-light"
-                                                   href="#"><?php echo number_format($votes) ?></a>
+                                                   href="https://www.imdb.com/title/tt<?php echo str_pad($movie[0]['movieid'], 7, "0", STR_PAD_LEFT); ?>/ratings/">
+                                                    <?php echo number_format($movie[0]['imdbvote']); ?></a>
                                             </span>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-secondary border-secondary">ژانر</span>
-                                            <span class="form-control bg-dark border-dark text-light">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-secondary border-secondary">ژانر</span>
+                                                <span class="form-control bg-dark border-dark text-light">
                                             <ul class="chi-movie-stars">
                                                 <?php
-                                                foreach ($geners as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j . '</a></li>';
+                                                foreach ($genres as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="genre.php?id=' . $j['id'] . '">' . $j['name'] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
                                             </span>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-secondary border-secondary">کارگردان</span>
-                                            <span class="form-control bg-dark border-dark text-light">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-secondary border-secondary">کارگردان</span>
+                                                <span class="form-control bg-dark border-dark text-light">
                                                 <ul class="chi-movie-stars">
                                                 <?php
-                                                foreach ($director as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="https://www.imdb.com/name/nm' . $j["imdb"] . '">' . $j["name"] . '</a></li>';
+                                                foreach ($directors as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="https://www.imdb.com/name/nm' . str_pad($j["personid"], 7, "0", STR_PAD_LEFT) . '">' . $j["fullname"] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
                                             </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 chi-peyda-regular">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-secondary border-secondary">Metascore</span>
-                                            <span class="form-control bg-dark border-dark text-light">
+                                        <div class="col-md-6 chi-peyda-regular">
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-secondary border-secondary">Metascore</span>
+                                                <span class="form-control bg-dark border-dark text-light">
                                                 <a class="text-decoration-none text-light"
-                                                   href="https://www.imdb.com/title/tt<?php echo $imdbid ?>/criticreviews"><?php echo $metacriticRating ?>/100</a>
+                                                   href="https://www.imdb.com/title/tt<?php echo str_pad($movie[0]['movieid'], 7, "0", STR_PAD_LEFT); ?>/criticreviews">
+                                                    <?php echo $movie[0]['metascore']; ?>/100</a>
                                             </span>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-secondary border-secondary">زبان</span>
-                                            <span class="form-control bg-dark border-dark text-light">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-secondary border-secondary">زبان</span>
+                                                <span class="form-control bg-dark border-dark text-light">
                                             <ul class="chi-movie-stars">
                                                 <?php
                                                 foreach ($languages as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j . '</a></li>';
+                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j['name'] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
                                             </span>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-secondary border-secondary">محصول</span>
-                                            <span class="form-control bg-dark border-dark text-light">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-secondary border-secondary">محصول</span>
+                                                <span class="form-control bg-dark border-dark text-light">
                                             <ul class="chi-movie-stars">
                                                 <?php
-                                                foreach ($country as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j . '</a></li>';
+                                                foreach ($countries as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j['name'] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
                                             </span>
-                                        </div>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text bg-secondary border-secondary">سال تولید</span>
-                                            <span class="form-control bg-dark border-dark text-light">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text bg-secondary border-secondary">سال تولید</span>
+                                                <span class="form-control bg-dark border-dark text-light">
                                                 <a class="text-decoration-none text-light"
-                                                   href="#"><?php echo $year ?></a>
+                                                   href="#"><?php echo $movie[0]['yearproduced']; ?></a>
                                             </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row row-cols-1">
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text bg-secondary border-secondary">ستارگان</span>
-                                        <span class="form-control bg-dark border-dark text-light chi-justify">
+                                    <div class="row row-cols-1">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text bg-secondary border-secondary">ستارگان</span>
+                                            <span class="form-control bg-dark border-dark text-light chi-justify">
                                             <ul class="chi-movie-stars">
                                                 <?php
-                                                foreach ($actor_stars as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="https://www.imdb.com/name/nm' . $j["imdb"] . '">' . $j["name"] . '</a></li>';
+                                                foreach ($actors as $j) {
+                                                    echo '<li><a class="text-decoration-none text-light" href="https://www.imdb.com/name/nm' . str_pad($j["personid"], 7, "0", STR_PAD_LEFT) . '">' . $j["fullname"] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
                                         </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row row-cols-1">
-                                    <div class="input-group mb-3">
+                                    <div class="row row-cols-1">
+                                        <div class="input-group mb-3">
                                         <span class="input-group-text bg-secondary border-secondary">
                                             خلاصه
                                             <br>
                                             داستان
                                         </span>
-                                        <span class="form-control bg-dark border-dark text-light chi-justify">
-                                            <?php echo substr($storyline, 0, 300) . "..." ?>
+                                            <span class="form-control bg-dark border-dark text-light chi-justify">
+                                            <?php echo substr($movie[0]['storyline'], 0, 300) . "..."; ?>
                                         </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -208,106 +190,90 @@ $plotOutline = $movie->plotoutline();
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 col-12 mb-3">
-            <div class="row mb-3">
-                <div class="col">
-                    <div class="card color2-bg">
-                        <div class="card-body">
-                            <div class="card-title chi-peyda-regular color4-f">
-                                منوی فیلم
+            <div class="col-md-3 col-12 mb-3">
+                <?php if ($is_logged_in) { ?>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="card color2-bg">
+                                <div class="card-body">
+                                    <div class="card-title chi-peyda-regular color4-f">
+                                        منوی فیلم
+                                    </div>
+                                    <div class="card-text">
+                                        <div class="d-grid gap-2 col mx-auto chi-peyda-regular">
+                                            <?php
+                                            $movie_id = $movie[0]['movieid'];
+
+
+                                            $sql = "SELECT * FROM `chibebinam`.`watchlist` WHERE `watchuser` = '$user_id' AND `watchmovie` = '$movie_id'; ";
+                                            $stmt = $pdo->prepare($sql);
+                                            $stmt->execute();
+
+                                            if (empty($stmt->fetchAll(PDO::FETCH_ASSOC))) { ?>
+                                                <a class="btn btn-dark"
+                                                   href="profile/updatelist.php?watch=<?php echo $movie[0]['movieid']; ?>">افزودن
+                                                    به لیست تماشا</a>
+                                            <?php } else { ?>
+                                                <a class="btn btn-dark text-danger"
+                                                   href="profile/updatelist.php?watch=<?php echo $movie[0]['movieid']; ?>&delete=1">پاک
+                                                    کردن
+                                                    از لیست تماشا</a>
+                                            <?php }
+                                            $movie_id = $movie[0]['movieid'];
+
+
+                                            $sql = "SELECT * FROM `chibebinam`.`watchedlist` WHERE `watcheduser` = '$user_id' AND `watchedmovie` = '$movie_id'; ";
+                                            $stmt = $pdo->prepare($sql);
+                                            $stmt->execute();
+
+                                            if (empty($stmt->fetchAll(PDO::FETCH_ASSOC))) { ?>
+                                                <a class="btn btn-dark"
+                                                   href="profile/updatelist.php?watched=<?php echo $movie[0]['movieid']; ?>">افزودن
+                                                    به دیده شده ها</a>
+                                            <?php } else { ?>
+                                                <a class="btn btn-dark text-danger"
+                                                   href="profile/updatelist.php?watched=<?php echo $movie[0]['movieid']; ?>&delete=1">پاک
+                                                    کردن
+                                                    از دیده شده ها</a>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-text">
-                                <div class="d-grid gap-2 col mx-auto chi-peyda-regular">
-                                    <button class="btn btn-dark" type="button">افزودن به لیست تماشا</button>
-                                    <button class="btn btn-dark" type="button">افزودن به دیده شده ها</button>
+                        </div>
+                    </div>
+                <?php } ?>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="card color2-bg">
+                            <div class="card-body">
+                                <div class="card-title chi-peyda-regular color4-f">
+                                    افتخارات
+                                </div>
+                                <div class="card-text">
+                                    <ul class="list-group list-group-flush">
+                                        <?php
+                                        if ($movie[0]['imdbtop']) {
+                                            echo '<li class="list-group-item chi-list-item">رتبه ' . $movie[0]['imdbtop'] . ' از 250 فیلم برتر IMDb</li>';
+                                        }
+
+                                        if ($movie[0]['oscarawards']) {
+                                            echo '<li class="list-group-item chi-list-item">برنده ' . $movie[0]['oscarawards'] . ' اسکار</li>';
+                                        }
+                                        if ($movie[0]['oscarnominations']) {
+                                            echo '<li class="list-group-item chi-list-item">نامزد ' . $movie[0]['oscarnominations'] . ' اسکار</li>';
+                                        }
+
+                                        ?>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row mb-3">
-                <div class="col">
-                    <div class="card color2-bg">
-                        <div class="card-body">
-                            <div class="card-title chi-peyda-regular color4-f">
-                                افتخارات
-                            </div>
-                            <div class="card-text">
-                                <ul class="list-group list-group-flush">
-                                    <?php
-                                    if ($top250) {
-                                        echo '<li class="list-group-item chi-list-item">رتبه ' . $top250 . ' از 250 فیلم برتر IMDb</li>';
-                                    }
-
-                                    $won_oscars = 0;
-                                    $lost_oscars = 0;
-
-                                    if (isset($awards["Academy Awards, USA"])) {
-                                        foreach ($awards["Academy Awards, USA"]["entries"] as $j) {
-                                            if ($j["won"]) {
-                                                $won_oscars++;
-                                            } else {
-                                                $lost_oscars++;
-                                            }
-                                        }
-                                        echo '<li class="list-group-item chi-list-item">برنده ' . $won_oscars . ' اسکار</li>';
-                                        echo '<li class="list-group-item chi-list-item">نامزد ' . $lost_oscars . ' اسکار</li>';
-                                    }
-                                    ?>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-</div>
-<!--MainCard-->
+    <!--MainCard-->
 
-<!--Footer-->
-<footer>
-    <div class="container">
-        <div class="row my-3">
-            <div class="col-lg-8 col-sm-4 px-md-0 px-4 pe-lg-5 mb-md-0 mb-4">
-                <h3 class="chi-peyda-footer color4-f">
-                    چی ببینم؟
-                </h3>
-                <p class="chi-isx-regular chi-justify color4-f opacity-75">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها
-                    و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.
-                </p>
-            </div>
-            <div class="col-lg-2 col-sm-4 color4-f chi-peyda-regular mb-md-0 mb-4">
-                <ul>
-                    <li><a class="text-decoration-none" href="#">مجموعه ها</a></li>
-                    <li><a class="text-decoration-none" href="#">بازیگران</a></li>
-                    <li><a class="text-decoration-none" href="#">کارگردانان</a></li>
-                    <li><a class="text-decoration-none" href="#">شبکه ها</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-2 col-sm-4 color4-f chi-peyda-regular mb-md-0 mb-4">
-                <ul>
-                    <li><a class="text-decoration-none" href="#">مجموعه ها</a></li>
-                    <li><a class="text-decoration-none" href="#">بازیگران</a></li>
-                    <li><a class="text-decoration-none" href="#">کارگردانان</a></li>
-                    <li><a class="text-decoration-none" href="#">شبکه ها</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="row my-3">
-            <p class="chi-isx-regular text-center color2-f chi-ltr">
-                @mjavadtatari
-            </p>
-        </div>
-    </div>
-</footer>
-<!--Footer-->
-
-<!--JavaScript Files-->
-<script src="js/all.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php require __DIR__ . '\footer.php'; ?>

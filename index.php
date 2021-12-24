@@ -1,4 +1,18 @@
-<?php require __DIR__ . '\header.php'; ?>
+<?php
+require __DIR__ . '\header.php';
+
+$pdo = connectToDb();
+
+$latest = "SELECT * FROM `chibebinam`.`movies` ORDER BY RAND() LIMIT 6";
+$stmt = $pdo->prepare($latest);
+$stmt->execute();
+$latest_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$carousel = "SELECT * FROM `chibebinam`.`movies` LIMIT 3";
+$stmt = $pdo->prepare($carousel);
+$stmt->execute();
+$carousel_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 
     <!--MainCard-->
     <div class="container">
@@ -261,26 +275,31 @@
                         <div class="card-title chi-peyda-regular color4-f">
                             پیشنهاد امروز:
                         </div>
-                        <div id="dayCarousel" class="carousel carousel-dark slide pt-md-3 my-3 mx-5 m-sm-3"
+                        <div id="chiCarousel" class="carousel carousel-dark slide pt-md-3 my-3 mx-5 m-sm-3"
                              data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active" data-bs-interval="10000">
-                                    <a class="" href="#"><img src="image/tt10696784.jpg" class="d-block w-100"
-                                                              alt="..."></a>
+                                    <a class="" href="movie.php?id=<?php echo $carousel_list[0]['movieid']; ?>"><img
+                                                src="<?php echo $carousel_list[0]['thumb']; ?>" class="d-block w-100"
+                                                alt="<?php echo $carousel_list[0]['name']; ?>"></a>
                                 </div>
                                 <div class="carousel-item" data-bs-interval="2000">
-                                    <a class="" href="#"><img src="image/tt2382320.jpg" class="d-block w-100" alt="..."></a>
+                                    <a class="" href="movie.php?id=<?php echo $carousel_list[1]['movieid']; ?>"><img
+                                                src="<?php echo $carousel_list[1]['thumb']; ?>" class="d-block w-100"
+                                                alt="<?php echo $carousel_list[1]['name']; ?>"></a>
                                 </div>
                                 <div class="carousel-item">
-                                    <a class="" href="#"><img src="image/tt0111161.jpg" class="d-block w-100" alt="..."></a>
+                                    <a class="" href="movie.php?id=<?php echo $carousel_list[2]['movieid']; ?>"><img
+                                                src="<?php echo $carousel_list[2]['thumb']; ?>" class="d-block w-100"
+                                                alt="<?php echo $carousel_list[2]['name']; ?>"></a>
                                 </div>
                             </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#dayCarousel"
+                            <button class="carousel-control-prev" type="button" data-bs-target="#chiCarousel"
                                     data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#dayCarousel"
+                            <button class="carousel-control-next" type="button" data-bs-target="#chiCarousel"
                                     data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
@@ -293,94 +312,38 @@
     </div>
     <!--MainCard-->
 
-    <!--PopularThisWeek-->
+    <!--Random-->
     <div class="container">
         <div class="row mb-5">
             <div class="col">
                 <div class="card color2-bg">
                     <div class="card-body">
                         <div class="card-title chi-peyda-regular color4-f">
-                            محبوب های این هفته
+                            تصادفی ها
                         </div>
                         <div class="row row-cols-1 row-cols-md-6 g-4 py-3">
-                            <div class="col mb-3 px-md-3 px-5">
-                                <div class="card bg-dark">
-                                    <img class="card-img-top" src="image/tt2382320.jpg" alt="...">
-                                    <div class="card-body pt-3 pb-1">
-                                        <div class="card-title text-center chi-peyda-regular color4-f">
-                                            <a class="text-decoration-none" href="#">
-                                                The Shawshank Redemption
-                                            </a>
+                            <?php foreach ($latest_list as $i) { ?>
+                                <div class="col mb-3 px-md-3 px-5">
+                                    <div class="card bg-dark">
+                                        <img class="card-img-top" src="<?php echo $i['thumb']; ?>"
+                                             alt="<?php echo $i['name']; ?>">
+                                        <div class="card-body pt-3 pb-1">
+                                            <div class="card-title text-center chi-peyda-regular color4-f">
+                                                <a class="text-decoration-none"
+                                                   href="movie.php?id=<?php echo $i['movieid']; ?>">
+                                                    <?php echo $i['name']; ?>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col mb-3 px-md-3 px-5">
-                                <div class="card bg-dark">
-                                    <img class="card-img-top" src="image/tt0111161.jpg" alt="...">
-                                    <div class="card-body pt-3 pb-1">
-                                        <div class="card-title text-center chi-peyda-regular color4-f">
-                                            <a class="text-decoration-none" href="#">
-                                                The Shawshank Redemption
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-3 px-md-3 px-5">
-                                <div class="card bg-dark">
-                                    <img class="card-img-top" src="image/tt10696784.jpg" alt="...">
-                                    <div class="card-body pt-3 pb-1">
-                                        <div class="card-title text-center chi-peyda-regular color4-f">
-                                            <a class="text-decoration-none" href="#">
-                                                The Shawshank Redemption
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-3 px-md-3 px-5">
-                                <div class="card bg-dark">
-                                    <img class="card-img-top" src="image/tt2382320.jpg" alt="...">
-                                    <div class="card-body pt-3 pb-1">
-                                        <div class="card-title text-center chi-peyda-regular color4-f">
-                                            <a class="text-decoration-none" href="#">
-                                                The Shawshank Redemption
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-3 px-md-3 px-5">
-                                <div class="card bg-dark">
-                                    <img class="card-img-top" src="image/tt0111161.jpg" alt="...">
-                                    <div class="card-body pt-3 pb-1">
-                                        <div class="card-title text-center chi-peyda-regular color4-f">
-                                            <a class="text-decoration-none" href="#">
-                                                The Shawshank Redemption
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col mb-3 px-md-3 px-5">
-                                <div class="card bg-dark">
-                                    <img class="card-img-top" src="image/tt10696784.jpg" alt="...">
-                                    <div class="card-body pt-3 pb-1">
-                                        <div class="card-title text-center chi-peyda-regular color4-f">
-                                            <a class="text-decoration-none" href="#">
-                                                The Shawshank Redemption
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--PopularThisWeek-->
+    <!--Random-->
 
 <?php require __DIR__ . '\footer.php'; ?>
