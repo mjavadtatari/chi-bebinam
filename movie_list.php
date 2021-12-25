@@ -20,6 +20,24 @@ WHERE `categorytomovie`.`categoryktm` = (SELECT `categories`.`id` FROM `categori
 WHERE `persontomovie`.`personto` = 634240"
 ];
 
+preg_match('!\d+!', $subject, $the_id);
+
+if (preg_match('/(genre)\d+/', $subject)) {
+    $sql_addon[$subject] = "JOIN `categorytomovie` ON `categorytomovie`.`moviektm` = `movies`.`movieid`
+WHERE `categorytomovie`.`categoryktm` =  '$the_id[0]'";
+} elseif (preg_match('/(lang)\d+/', $subject)) {
+    $sql_addon[$subject] = "JOIN `languagetomovie` ON `languagetomovie`.`movieltm` = `movies`.`movieid`
+WHERE `languagetomovie`.`languageltm` =  '$the_id[0]'";
+} elseif (preg_match('/(cntry)\d+/', $subject)) {
+    $sql_addon[$subject] = "JOIN `countrytomovie` ON `countrytomovie`.`moviectm` = `movies`.`movieid`
+WHERE `countrytomovie`.`countryctm` = '$the_id[0]'";
+} elseif (preg_match('/(person)\d+/', $subject)) {
+    $sql_addon[$subject] = "JOIN `persontomovie` ON `persontomovie`.`movieto` = `movies`.`movieid`
+WHERE `persontomovie`.`personto` = '$the_id[0]'";
+} elseif (preg_match('/(year)\d+/', $subject)) {
+    $sql_addon[$subject] = "WHERE `yearproduced` = '$the_id[0]'";
+}
+
 if (isset($_GET['key'])) {
     $search = $_GET['key'];
     $sql_addon["s"] = "WHERE `name` LIKE '%$search%'";

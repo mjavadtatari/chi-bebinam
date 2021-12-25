@@ -97,7 +97,7 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <ul class="chi-movie-stars">
                                                 <?php
                                                 foreach ($genres as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="genre.php?id=' . $j['id'] . '">' . $j['name'] . '</a></li>';
+                                                    echo '<li><a class="text-decoration-none text-light" href="movie_list.php?sub=genre' . $j['id'] . '">' . $j['name'] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
@@ -109,7 +109,7 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                 <ul class="chi-movie-stars">
                                                 <?php
                                                 foreach ($directors as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="https://www.imdb.com/name/nm' . str_pad($j["personid"], 7, "0", STR_PAD_LEFT) . '">' . $j["fullname"] . '</a></li>';
+                                                    echo '<li><a class="text-decoration-none text-light" href="movie_list.php?sub=person' . str_pad($j["personid"], 7, "0", STR_PAD_LEFT) . '">' . $j["fullname"] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
@@ -131,7 +131,7 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <ul class="chi-movie-stars">
                                                 <?php
                                                 foreach ($languages as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j['name'] . '</a></li>';
+                                                    echo '<li><a class="text-decoration-none text-light" href="movie_list.php?sub=lang' . $j['id'] . '">' . $j['name'] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
@@ -143,7 +143,7 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <ul class="chi-movie-stars">
                                                 <?php
                                                 foreach ($countries as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="#">' . $j['name'] . '</a></li>';
+                                                    echo '<li><a class="text-decoration-none text-light" href="movie_list.php?sub=cntry' . $j['id'] . '">' . $j['name'] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
@@ -153,7 +153,7 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                 <span class="input-group-text bg-secondary border-secondary">سال تولید</span>
                                                 <span class="form-control bg-dark border-dark text-light">
                                                 <a class="text-decoration-none text-light"
-                                                   href="#"><?php echo $movie[0]['yearproduced']; ?></a>
+                                                   href="movie_list.php?sub=year<?php echo $movie[0]['yearproduced']; ?>"><?php echo $movie[0]['yearproduced']; ?></a>
                                             </span>
                                             </div>
                                         </div>
@@ -165,7 +165,7 @@ $directors = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <ul class="chi-movie-stars">
                                                 <?php
                                                 foreach ($actors as $j) {
-                                                    echo '<li><a class="text-decoration-none text-light" href="https://www.imdb.com/name/nm' . str_pad($j["personid"], 7, "0", STR_PAD_LEFT) . '">' . $j["fullname"] . '</a></li>';
+                                                    echo '<li><a class="text-decoration-none text-light" href="movie_list.php?sub=person' . str_pad($j["personid"], 7, "0", STR_PAD_LEFT) . '">' . $j["fullname"] . '</a></li>';
                                                 }
                                                 ?>
                                             </ul>
