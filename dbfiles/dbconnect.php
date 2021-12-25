@@ -1,5 +1,7 @@
 <?php
-$conf = include "../config.php";
+
+$upOne = dirname(__DIR__, 1);
+$conf = require $upOne."/config.php";
 //require __DIR__ . '/dblogger.php';
 
 $host = $conf["host"];
