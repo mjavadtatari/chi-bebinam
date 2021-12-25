@@ -44,7 +44,7 @@ $year_produced = $year_produced_stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="card-title chi-peyda-regular color4-f">
                             ویژگی های مورد نظرت رو انتخاب کن:
                         </div>
-                        <form class="chi-peyda-regular mx-auto">
+                        <form method="get" action="choosemovie.php" class="chi-peyda-regular mx-auto">
                             <div class="row row-cols-1 row-cols-md-3 pt-2 g-4 mx-auto">
                                 <div class="col">
                                     <div class="card color2-bg chi-border-light" style="height: 10em;">
@@ -53,7 +53,7 @@ $year_produced = $year_produced_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="card-text overflow-auto" style="height: 6.2em;">
                                                 <?php foreach ($genres as $i => $j) { ?>
                                                     <div class="form-check color4-f">
-                                                        <input class="form-check-input" type="checkbox"
+                                                        <input class="form-check-input" name="genres[]" type="checkbox"
                                                                value="<?php echo $j['id']; ?>"
                                                                id="g<?php echo $j['id']; ?>">
                                                         <label class="form-check-label" for="g<?php echo $j['id']; ?>">
@@ -72,7 +72,7 @@ $year_produced = $year_produced_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="card-text overflow-auto" style="height: 6.2em;">
                                                 <?php foreach ($countries as $i => $j) { ?>
                                                     <div class="form-check color4-f">
-                                                        <input class="form-check-input" type="checkbox"
+                                                        <input class="form-check-input" name="country[]" type="checkbox"
                                                                value="<?php echo $j['id']; ?>"
                                                                id="c<?php echo $j['id']; ?>">
                                                         <label class="form-check-label" for="c<?php echo $j['id']; ?>">
@@ -91,7 +91,7 @@ $year_produced = $year_produced_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="card-text overflow-auto" style="height: 6.2em;">
                                                 <?php foreach ($languages as $i => $j) { ?>
                                                     <div class="form-check color4-f">
-                                                        <input class="form-check-input" type="checkbox"
+                                                        <input class="form-check-input" name="language[]" type="checkbox"
                                                                value="<?php echo $j['id']; ?>"
                                                                id="l<?php echo $j['id']; ?>">
                                                         <label class="form-check-label" for="l<?php echo $j['id']; ?>">
@@ -110,7 +110,7 @@ $year_produced = $year_produced_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="card-text overflow-auto" style="height: 6.2em;">
                                                 <?php foreach ($year_produced as $i => $j) { ?>
                                                     <div class="form-check color4-f">
-                                                        <input class="form-check-input" type="checkbox"
+                                                        <input class="form-check-input" name="year[]" type="checkbox"
                                                                value="<?php echo $j['yearproduced']; ?>"
                                                                id="y<?php echo $j['yearproduced']; ?>">
                                                         <label class="form-check-label"
@@ -130,7 +130,7 @@ $year_produced = $year_produced_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="card-text overflow-auto" style="height: 6.2em;">
                                                 <?php for ($i = 9; $i > 0; $i--) { ?>
                                                     <div class="form-check color4-f">
-                                                        <input class="form-check-input" type="checkbox"
+                                                        <input class="form-check-input" name="imdb[]" type="checkbox"
                                                                value="<?php echo $i; ?>"
                                                                id="i<?php echo $i; ?>">
                                                         <label class="form-check-label" for="i<?php echo $i; ?>">
@@ -150,7 +150,7 @@ $year_produced = $year_produced_stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="card-text overflow-auto" style="height: 6.2em;">
                                                 <?php for ($i = 90; $i > 0; $i -= 10) { ?>
                                                     <div class="form-check color4-f">
-                                                        <input class="form-check-input" type="checkbox"
+                                                        <input class="form-check-input" name="meta[]" type="checkbox"
                                                                value="<?php echo $i; ?>"
                                                                id="m<?php echo $i; ?>">
                                                         <label class="form-check-label" for="m<?php echo $i; ?>">
