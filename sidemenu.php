@@ -11,8 +11,8 @@
                     <li class="list-group-item chi-list-item"><a href="watchedlist.php">دیده شده ها</a></li>
                     <!--                                <li class="list-group-item chi-list-item"><a href="#">اتصال اکانت IMDb</a></li>-->
                     <li class="list-group-item chi-list-item"><a href="profile.php">اطلاعات حساب</a></li>
-                    <li class="list-group-item chi-list-item"><a href="#">کلمه عبور</a></li>
-                    <li class="list-group-item chi-list-item"><a href="#">خروج</a></li>
+                    <li class="list-group-item chi-list-item"><a href="changepswd.php">کلمه عبور</a></li>
+                    <li class="list-group-item chi-list-item"><a href="logout.php">خروج</a></li>
                 </ul>
             </div>
         </div>
