@@ -1,12 +1,27 @@
 <?php require __DIR__ . '/session.php';
+require __DIR__ . '/pagination.php';
 
 $sql = "SELECT `movies`.`movieid`,`movies`.`name`
 FROM `movies` JOIN `watchedlist`
 ON `watchedlist`.`watchedmovie`=`movies`.`movieid`
 WHERE `watcheduser` = '$user_id'; ";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$the_watched_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$all_watched_list = $pdo->prepare($sql);
+$all_watched_list->execute();
+$all_watched_list->fetchAll(PDO::FETCH_ASSOC);
+
+$per_page = 8;
+$current_page = $_GET['p'] ?? 1;
+$offset = (($current_page - 1) * $per_page);
+
+$sql = "SELECT `movies`.`movieid`,`movies`.`name`
+FROM `movies` JOIN `watchedlist`
+ON `watchedlist`.`watchedmovie`=`movies`.`movieid`
+WHERE `watcheduser` = '$user_id' LIMIT $per_page OFFSET $offset ";
+$page_watched_list = $pdo->prepare($sql);
+$page_watched_list->execute();
+$page_watched_list = $page_watched_list->fetchAll(PDO::FETCH_ASSOC);
+
+$the_pages = getPaginationButtons($all_watched_list->rowCount(), $per_page, $current_page);
 ?>
 
     <!--MainCard-->
@@ -48,18 +63,44 @@ $the_watched_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php foreach ($the_watched_list as $i => $j) { ?>
+                                        <?php foreach ($page_watched_list as $i => $j) { ?>
                                             <tr>
-                                                <th scope="row"><?php echo $i + 1; ?></th>
+                                                <th scope="row"><?php echo $offset + $i + 1; ?></th>
                                                 <td><a class="text-decoration-none"
-                                                       href="movie.php?id=<?php echo $j['movieid']; ?>"><?php echo $j['name']; ?></a></td>
-                                                <td><a class="text-decoration-none" href="profile/updatelist.php?watched=<?php echo $j['movieid']; ?>&delete=1&back=watchedlist">
+                                                       href="movie.php?id=<?php echo $j['movieid']; ?>"><?php echo $j['name']; ?></a>
+                                                </td>
+                                                <td><a class="text-decoration-none"
+                                                       href="profile/updatelist.php?watched=<?php echo $j['movieid']; ?>&delete=1&back=watchedlist">
                                                         پاک کردن</a>
                                                 </td>
                                             </tr>
                                         <?php } ?>
                                         </tbody>
                                     </table>
+                                    <div class="row">
+                                        <nav class="text-center" aria-label="Page navigation example">
+                                            <ul class="pagination chi-peyda-regular justify-content-center">
+                                                <?php if ($the_pages[0]['text'] != "قبلی") { ?>
+                                                    <li class="page-item"><span
+                                                                class="page-link text-secondary">قبلی</span></li>
+                                                <?php }
+                                                foreach ($the_pages as $j) {
+                                                    if ($j['text'] == "...") { ?>
+                                                        <span class="page-link text-secondary"><?php echo $j['text']; ?></span>
+                                                    <?php } else { ?>
+                                                        <li class="page-item <?php if ($current_page == $j['number']) echo 'active'; ?>">
+                                                            <a class="page-link"
+                                                               href="?p=<?php echo $j['number']; ?>">
+                                                                <?php echo $j['text']; ?></a></li>
+                                                    <?php }
+                                                }
+                                                if ($the_pages[count($the_pages) - 1]['text'] != "بعدی") { ?>
+                                                    <li class="page-item"><span
+                                                                class="page-link text-secondary">بعدی</span></li>
+                                                <?php } ?>
+                                            </ul>
+                                        </nav>
+                                    </div>
                                 </div>
                             </div>
                         </div>
